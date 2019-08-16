@@ -66,6 +66,32 @@ func (f *Linklist) deleteElementAt(position int16) (bool, error) {
 	return true, nil
 }
 
+/**
+
+	In this code we make a approch that is number of element are even then throw error
+	you can decide by our way what to return
+
+**/
+
+func (f Linklist) middle() (*Node, error) {
+
+	if f.Head == nil {
+		return nil, errors.New("Empty List")
+	}
+
+	var fast, slow *Node = f.Head, f.Head
+
+	for fast.Next != nil && fast.Next.Next != nil {
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+
+	if fast.Next != nil {
+		return nil, errors.New(" This is a even element list there is no middle element")
+	}
+	return slow, nil
+}
+
 func (f Linklist) printList() {
 	current := f.Head
 	for current != nil {
@@ -79,8 +105,10 @@ func main() {
 	ll.addNodeEnd(10)
 	ll.addNodeEnd(20)
 	ll.addNodeEnd(30)
+	ll.addNodeEnd(30)
 	ll.printList()
 
+	/** For Delete Element
 	_, err := ll.deleteElementAt(0)
 	if err != nil {
 		fmt.Println(err)
@@ -88,4 +116,13 @@ func main() {
 
 	fmt.Println(ll.Size)
 	ll.printList()
+	**/
+
+	midNode, err := ll.middle()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(midNode.Data)
+	}
+
 }
